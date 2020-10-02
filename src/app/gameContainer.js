@@ -36,7 +36,7 @@ class GameContainer extends Component {
   }
 
   keyIdentifier = (e) => {
-    switch(e.key){
+    switch(e.key) {
       case 'ArrowRight':
         console.log('arrow right');
         this.handleSwipeRight();
@@ -57,6 +57,8 @@ class GameContainer extends Component {
         this.handleArrowDown();
         this.populateExtraNumber();
         break;
+      default:
+        console.log('no action');
     }
   }
 
