@@ -38,54 +38,46 @@ class GameContainer extends Component {
   keyIdentifier = (e) => {
     switch(e.key) {
       case 'ArrowRight':
-        console.log('arrow right');
         this.handleSwipeRight();
         this.populateExtraNumber();
         break;
       case 'ArrowLeft':
-        console.log('arrow left');
         this.handleSwipeLeft();
         this.populateExtraNumber();
         break;
       case 'ArrowUp':
-        console.log('arrow up');
         this.handleArrowUp();
         this.populateExtraNumber();
         break;
       case 'ArrowDown':
-        console.log('arrow down');
         this.handleArrowDown();
         this.populateExtraNumber();
         break;
       default:
-        console.log('no action');
+        // It does nothing.
     }
   }
 
   handleSwipe = (direction) => {
     switch(direction){
       case 'right':
-        console.log('arrow right');
         this.handleSwipeRight();
         this.populateExtraNumber();
         break;
       case 'left':
-        console.log('arrow left');
         this.handleSwipeLeft();
         this.populateExtraNumber();
         break;
       case 'top':
-        console.log('arrow up');
         this.handleArrowUp();
         this.populateExtraNumber();
         break;
       case 'bottom':
-        console.log('arrow down');
         this.handleArrowDown();
         this.populateExtraNumber();
         break;
       default:
-          console.log('no action');
+          // It does nothing.
     }
   }
 
