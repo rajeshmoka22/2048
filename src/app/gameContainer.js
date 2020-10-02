@@ -84,6 +84,8 @@ class GameContainer extends Component {
         this.handleArrowDown();
         this.populateExtraNumber();
         break;
+      default:
+          console.log('no action');
     }
   }
 
