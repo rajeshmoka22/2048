@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+.App {
+  text-align: center;
+}
+
+body {
+  background-color: #262626;
+  font-family: poppins, segoe UI, san-serif;
+}
+
+.gameContainer {
+  height: 420px;
+  width: 420px;
+  background-color: #bbada0;
+  margin:auto;
+  top: 15vh;
+  position:relative;
+  border-radius: 6px;
+}
+
+.matrix {
+  display: flex;
+  justify-items: stretch;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+
+.numberContainer {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height: 90px;
+  width:90px;
+  color:black;
+  border-radius:5px;
+  list-style:none;
+  margin:5px;
+  font-weight:700;
+  font-size:1.7rem;
+}
+
+.scoreContainer {
+  height: 42px;
+  width:150px;
+  color: black;
+  border-radius:5px;
+  background-color: #bbada0;
+}
+
+.score {
+  font-weight:600;
+  font-size:1.4rem;
+  margin: 4px;
+}
+
+.scoreText {
+  margin: 8px 4px 8px 12px;
+  float: left;
+}
+
+.restartButton {
+  width: 90px;
+  height: 42px;
+  border-radius: 5px;
+  border: none;
+  color: black;
+  background-color: #edc813;
+  font-family: inherit;
+  outline: none;
+  font-size: 1.05rem;
+}
+
+.restartButton:hover{
+  background-color: #ddc765;
+}
+
+.optionsContainer{
+  display:flex;
+  position: relative;
+  margin: auto;
+  justify-content: space-between;
+  width:420px;
+  top:10vh;
+  align-items: center;
+}
