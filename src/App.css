@@ -61,7 +61,7 @@ body {
 }
 
 .restartButton {
-  width: 90px;
+  width: 150px;
   height: 42px;
   border-radius: 5px;
   border: none;
@@ -80,7 +80,7 @@ body {
   display:flex;
   position: relative;
   margin: auto;
-  justify-content: space-between;
+  justify-content: space-around;
   width:420px;
   top:10vh;
   align-items: center;
