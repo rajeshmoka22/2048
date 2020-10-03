@@ -210,6 +210,7 @@ class GameContainer extends Component {
     const flattenedArray = numArray.flat(1);
     return (
       <>
+        <div className="heading">2048</div>
         <div className="optionsContainer">
           <div className="scoreContainer">
             <span className="scoreText">Score</span>
