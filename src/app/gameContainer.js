@@ -16,22 +16,8 @@ class GameContainer extends Component {
   }
 
   populateExtraNumber = () => {
-    const { numArray, length } = this.state;
-    const emptySpots = [];
-    for(let i=0; i<length; i+=1){
-      for(let j=0; j<length; j+=1){
-        if(!numArray[i][j]){
-          emptySpots.push({
-            x: i,
-            y: j
-          });
-        }
-      }
-    }
-    if(emptySpots.length){
-      const spot = emptySpots[Math.floor(Math.random()*emptySpots.length)];
-      numArray[spot.x][spot.y] = Math.floor(Math.random()*2) ? 2 : 4;
-    }
+    let { numArray } = this.state;
+    numArray = this.pushNumberAtEmptySpot(numArray);
     this.setState({ numArray });
   }
 
@@ -81,12 +67,16 @@ class GameContainer extends Component {
     }
   }
 
+  removeZeros = (arr) => {
+    return arr.filter(value =>  value > 0);
+  }
+
   handleSwipeLeft = () => {
     const { numArray, length, score } = this.state;
     let scoreToBeAdded = 0;
     for(let i=0; i<length; i+=1) {
       let temp = [...numArray[i]];
-      temp = temp.filter(value => value>0);
+      temp = this.removeZeros(temp);
       if(temp.length){
         for(let j=0; j<=temp.length-1;j+=1){
           if(temp[j] === temp[j+1]) {
@@ -95,7 +85,7 @@ class GameContainer extends Component {
             scoreToBeAdded += temp[j];
           }
         }
-        temp = temp.filter(value => value > 0);
+        temp = this.removeZeros(temp);
       }
       for(let j=temp.length; j < length; j+=1){
         temp.push(0);
@@ -110,7 +100,7 @@ class GameContainer extends Component {
     let scoreToBeAdded = 0;
     for(let i=0; i<length; i+=1) {
       let temp = [...numArray[i]];
-      temp = temp.filter(value => value > 0);
+      temp = this.removeZeros(temp);
       if(temp.length){
         for(let j=temp.length-1; j>0;j-=1){
           if(temp[j] === temp[j-1]) {
@@ -120,7 +110,7 @@ class GameContainer extends Component {
           }
         }
       }
-      temp = temp.filter(value => value > 0);
+      temp = this.removeZeros(temp);
       for(let j = temp.length; j < length; j+=1){
         temp.unshift(0);
       }
@@ -146,7 +136,7 @@ class GameContainer extends Component {
           }
         }
       }
-      temp = temp.filter(value => value > 0);
+      temp = this.removeZeros(temp);
       for(let j=temp.length; j<length; j+=1){
         temp.push(0);
       }
@@ -174,7 +164,7 @@ class GameContainer extends Component {
           }
         }
       }
-      temp = temp.filter(value => value > 0);
+      temp = this.removeZeros(temp);
       for(let j=temp.length; j<length; j+=1){
         temp.unshift(0);
       }
@@ -186,7 +176,12 @@ class GameContainer extends Component {
   }
 
   restartGame = () => {
-    const numArray = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+    let numArray = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
+    numArray = this.pushNumberAtEmptySpot(numArray);
+    this.setState({ numArray, score: 0 });
+  }
+
+  pushNumberAtEmptySpot = (numArray) => {
     const emptySpots = [];
     for(let i=0; i<numArray.length; i+=1){
       for(let j=0; j<numArray.length; j+=1){
@@ -202,7 +197,7 @@ class GameContainer extends Component {
       const spot = emptySpots[Math.floor(Math.random()*emptySpots.length)];
       numArray[spot.x][spot.y] = Math.floor(Math.random()*2) ? 2 : 4;
     }
-    this.setState({ numArray, score: 0 });
+    return numArray;
   }
   
   render(){
