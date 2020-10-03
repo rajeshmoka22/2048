@@ -204,14 +204,7 @@ class GameContainer extends Component {
     }
     this.setState({ numArray, score: 0 });
   }
-
-  restartButton = () => {
-    return (
-      <button onClick={this.restartGame} className="restartButton"> Restart </button>
-    )
-  }
   
-
   render(){
     const { numArray, score } = this.state;
     const flattenedArray = numArray.flat(1);
@@ -222,7 +215,9 @@ class GameContainer extends Component {
             <span className="scoreText">Score</span>
             <div className="score">{score}</div>
           </div>
-          <div>{this.restartButton()}</div>
+          <div>
+            <button onClick={this.restartGame} className="restartButton"> New Game </button>
+          </div>
         </div>
         <ReactTouchEvents
           onSwipe={this.handleSwipe}
@@ -237,7 +232,6 @@ class GameContainer extends Component {
             </ul>
           </div>
         </ReactTouchEvents>
-        <div>{this.restartButton()}</div>
       </>
     )
   }
