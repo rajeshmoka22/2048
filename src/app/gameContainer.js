@@ -7,12 +7,36 @@ class GameContainer extends Component {
   state = {
     numArray: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]],
     length: 4,
-    score: 0
+    score: 0,
+    gameOver: false
   };
 
   componentDidMount() {
     document.querySelector('body').addEventListener('keydown', (e) => this.keyIdentifier(e));
-    this.populateExtraNumber();
+    window.addEventListener('beforeunload', this.saveData);
+    if(localStorage.getItem('matrix')) {
+      const matrix = JSON.parse(localStorage.getItem('matrix'));
+      const score = JSON.parse(localStorage.getItem('score'));
+      this.removeData();
+      this.setState({ numArray: matrix, score });
+    } else this.populateExtraNumber();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('beforeunload', this.saveData);
+  }
+
+  removeData = () => {
+    localStorage.removeItem('matrix');
+    localStorage.removeItem('score');
+  }
+
+  saveData = () => {
+    const { numArray, score } = this.state;
+    if (score > 0) {
+      localStorage.setItem('matrix', JSON.stringify(numArray));
+      localStorage.setItem('score', `${score}`);
+    }
   }
 
   populateExtraNumber = () => {
@@ -178,14 +202,14 @@ class GameContainer extends Component {
   restartGame = () => {
     let numArray = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]];
     numArray = this.pushNumberAtEmptySpot(numArray);
-    this.setState({ numArray, score: 0 });
+    this.setState({ numArray, score: 0, gameOver: false });
   }
 
   pushNumberAtEmptySpot = (numArray) => {
     const emptySpots = [];
     for(let i=0; i<numArray.length; i+=1){
       for(let j=0; j<numArray.length; j+=1){
-        if(!numArray[i][j]){
+        if(!numArray[i][j]){ //check if element is 0
           emptySpots.push({
             x: i,
             y: j
@@ -196,12 +220,35 @@ class GameContainer extends Component {
     if(emptySpots.length){
       const spot = emptySpots[Math.floor(Math.random()*emptySpots.length)];
       numArray[spot.x][spot.y] = Math.floor(Math.random()*2) ? 2 : 4;
-    }
+    } else this.isGameOver();
     return numArray;
+  }
+
+  isGameOver = () => {
+    const { numArray, length } = this.state;
+    let gameOver = true;
+    let row = 0, col = 0; 
+    while(row < length-1) {
+      for(let tempRow = row; tempRow < length-1; tempRow += 1){
+        if(numArray[tempRow][col] === numArray[tempRow+1][col]) {
+          gameOver = false;
+          break;
+        }
+      }
+      for(let tempCol = row; tempCol < length-1; tempCol += 1){
+        if(numArray[row][tempCol] === numArray[row][tempCol+1]) {
+          gameOver = false;
+          break;
+        }
+      }
+      row += 1;
+      col += 1;
+    }
+    this.setState({ gameOver });
   }
   
   render(){
-    const { numArray, score } = this.state;
+    const { numArray, score, gameOver } = this.state;
     const flattenedArray = numArray.flat(1);
     return (
       <>
@@ -225,6 +272,10 @@ class GameContainer extends Component {
                   return <li className="numberContainer" key={index} style={{ backgroundColor: colors[value] }}>{value || ''}</li>
                 })
               }
+              {gameOver && (<div className="gameOver">
+                  <div className="padding-8">Game Over</div>
+                  <button onClick={this.restartGame} className="restartButton"> New Game </button>
+                </div>)}
             </ul>
           </div>
         </ReactTouchEvents>
