@@ -227,7 +227,7 @@ class GameContainer extends Component {
   isGameOver = () => {
     const { numArray, length } = this.state;
     let gameOver = true;
-    let row = 0, col = 0; 
+    let row = 0, col = 0;
     while(row < length-1) {
       for(let tempRow = row; tempRow < length-1; tempRow += 1){
         if(numArray[tempRow][col] === numArray[tempRow+1][col]) {
@@ -235,14 +235,18 @@ class GameContainer extends Component {
           break;
         }
       }
-      for(let tempCol = row; tempCol < length-1; tempCol += 1){
-        if(numArray[row][tempCol] === numArray[row][tempCol+1]) {
-          gameOver = false;
-          break;
-        }
-      }
       row += 1;
-      col += 1;
+    }
+    if (!gameOver) {
+      while(col < length-1) {
+        for(let tempCol = col; tempCol < length-1; tempCol += 1){
+          if(numArray[row][tempCol] === numArray[row][tempCol+1]) {
+            gameOver = false;
+            break;
+          }
+        }
+        col += 1;
+      }
     }
     this.setState({ gameOver });
   }
