@@ -237,7 +237,7 @@ class GameContainer extends Component {
       }
       row += 1;
     }
-    if (!gameOver) {
+    if (gameOver) {
       while(col < length-1) {
         for(let tempCol = col; tempCol < length-1; tempCol += 1){
           if(numArray[row][tempCol] === numArray[row][tempCol+1]) {
